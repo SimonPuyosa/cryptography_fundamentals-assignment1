@@ -1,0 +1,1 @@
+pycryptodome == 3.23.0; python_version >= "3.7"
