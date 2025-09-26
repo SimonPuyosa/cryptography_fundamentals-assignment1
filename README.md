@@ -20,8 +20,7 @@ sudo pip install pycryptodome
 Verify installation with:
 pip show pycryptodome
 
-
-
-Running the tests: Describe which commands should be used to run tests
-that show that your functions work. How should the outputs of the
-tests be interpreted by a reader?
+### Running and interpreting the tests
+To run the tests, simply run the implementation.py file. The program will print the tests in the console. 
+The first test shows that a message can be encrpyted and decrypted again succesfully.
+The second tests shows that changing a single bit in the ciphertext results in a single changed bit in the plaintext. This property shows that CTR-mode is not IND-CCA secure. 
