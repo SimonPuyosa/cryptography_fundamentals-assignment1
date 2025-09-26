@@ -12,6 +12,9 @@ Python is interpreted so there is no compilation. Below are instructions to set 
 ### Steps to run
 sudo apt install -y python3 python3-pip
 pip install --upgrade pip
+
+pip install -r requirements.txt
+OR
 sudo pip install pycryptodome
 
 Verify installation with:
