@@ -1,3 +1,4 @@
+import struct
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
@@ -24,7 +25,6 @@ def CustomEncrypt(plaintext: bytes, key: bytes) -> bytes:
     #Generate nonceand and convert to int
     nonce = get_random_bytes(BLOCK_SIZE)
     nonce_int = _int_from_bytes(nonce)
-
     ct = bytearray()
 
     # Encrypt plaintext in blocks // Handle last block if not multiple of block size = 16
@@ -69,11 +69,33 @@ def CustomDecrypt(cipherText: tuple, key: bytes) -> bytes:
         
 if __name__ == "__main__":
     key = KeyGen()
-    message = b"Hello, World! This is a test message for encryption, to test the length variations."
-    for i in range(len(message)):
-        cipherText = CustomEncrypt(message[:i], key)
-        print()
-        print("Cipher Text: ", cipherText)
-        decryptedMessage = CustomDecrypt(cipherText, key)
-        print("Decrypted Message: ", decryptedMessage)
 
+    # The following code tests that the implementation encrypts and decrypts correctly.
+    message = b"Hello, World! This is a test message for encryption."
+    print("Message to encrypt: ", message)
+    cipherText = CustomEncrypt(message, key)
+    print("Ciphertext: ", cipherText)
+    decryptedMessage = CustomDecrypt(cipherText, key)
+    print("Decrypted Message: ", decryptedMessage)
+    print()
+
+    #The following code shows that CTR-mode is not IND-CCA secure, 
+    # as a single flipped bit in the ciphertext results in a single flipped bit in the plaintext.
+    ct1 = (b"000000000",b"0000")
+    print ("Ciphertext 1: ",ct1[1])
+    pt1 = CustomDecrypt(ct1, key)
+    ptH1 = pt1.hex()
+    ptI1 = int(ptH1, 16)
+    ptB1 = bin(ptI1)[2:]
+    print ("Decrpytion of ciphertext 1: ", ptB1)
+
+    ct2 = (b"000000000",b"0001")
+    print ("Ciphertext 2: ",ct2[1])
+    pt2 = CustomDecrypt(ct2, key)
+    ptH2 = pt2.hex()
+    ptI2 = int(ptH2, 16)
+    ptB2 = bin(ptI2)[2:]
+    print ("Decryption of ciphertext 2: ", ptB2)
+
+
+ 
